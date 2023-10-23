@@ -1602,3 +1602,12 @@ func TestDefaultFinalSleepValue(t *testing.T) {
 		assert.Equal(t, time.Minute, cfg.FinalSleep)
 	})
 }
+
+func TestBracketedIPv6Address(t *testing.T) {
+	var ringConfig Config
+	flagext.DefaultValues(&ringConfig)
+	cfg := testLifecyclerConfig(ringConfig, "instance-1")
+	cfg.Addr = "[::1]"
+	lifecycler, _ := NewLifecycler(cfg, &nopFlushTransferer{}, "ingester", ringKey, true, log.NewNopLogger(), nil)
+	assert.Equal(t, "[::1]:1", lifecycler.Addr)
+}

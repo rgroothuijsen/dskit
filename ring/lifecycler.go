@@ -10,6 +10,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -213,7 +214,7 @@ func NewLifecycler(cfg LifecyclerConfig, flushTransferer FlushTransferer, ringNa
 		cfg:                   cfg,
 		flushTransferer:       flushTransferer,
 		KVStore:               store,
-		Addr:                  net.JoinHostPort(addr, strconv.Itoa(port)),
+		Addr:                  net.JoinHostPort(strings.Trim(addr, "[]"), strconv.Itoa(port)),
 		ID:                    cfg.ID,
 		RingName:              ringName,
 		RingKey:               ringKey,
